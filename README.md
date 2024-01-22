@@ -15,3 +15,4 @@ To install clone the repository using "https://github.com/zkukulj/SucksRocks.git
 - "score?term=php&from=GitHub" term=word, from is an API instance, change appropriately
 
 To continue working on API expansion and add other providers to ApiLinks class based on new providers API description
+Further implementation could be set rewriting oAuth2 authentication https://github.com/zkukulj/GenericOauth2 
