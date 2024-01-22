@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+score_route:
+    path: /score
+    controller: 'App\Controller\ApiController::score'
+homepage:
+    path: /
+    controller: App\Controller\DefaultController::index
