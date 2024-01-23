@@ -9,3 +9,6 @@ score_route:
 homepage:
     path: /
     controller: App\Controller\DefaultController::index
+oauth_client:
+    path: /oauth/client/index.html
+    controller: App\Controller\OauthClientController::index

@@ -11,6 +11,7 @@
         "doctrine/orm": "^2.17",
         "guzzlehttp/guzzle": "^7.8",
         "league/oauth2-server": "^3.2",
+        "symfony/apache-pack": "^1.0",
         "symfony/console": "6.4.*",
         "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2.4",
@@ -70,7 +71,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.4.*"
         }
     }
