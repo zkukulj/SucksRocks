@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "^2.17",
+        "flix-tech/avro-php": "^5.0",
         "guzzlehttp/guzzle": "^7.8",
         "league/oauth2-server": "^3.2",
         "symfony/apache-pack": "^1.0",
