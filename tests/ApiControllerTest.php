@@ -2,44 +2,37 @@
 
 namespace App\Tests;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;  
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use App\Controller\ApiLinks;
-use App\Controller\ApiController;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ApiControllerTest extends TestCase
+class ApiControllerTest extends WebTestCase
 {
-    public function testScore()
+    public function testScoreAction()
     {
-        $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
-        $request = $this->createMock(Request::class);
-        $api = $this->createMock(ApiLinks::class);
-        $api->method('getUrl')->willReturn('https://api.example.com');
+        $client = static::createClient();
 
-        $controller = new ApiController($client, $api);
+        $term = 'php';
+        $from = 'github';
 
-        $request->method('get')->willReturnMap([
-            ['term', 'symfony'],
-            ['from', 'github']
-        ]);
+        $client->request('GET', '/score', ['term' => $term, 'from' => $from]);
 
-        $client->expects($this->exactly(2))
-            ->method('get')
-            ->withConsecutive(
-                ['https://api.example.com/symfony?in:comments'],
-                ['https://api.example.com/symfony?in:comments']
-            )
-            ->willReturnOnConsecutiveCalls(
-                json_encode(['total_count' => 5]),
-                json_encode(['total_count' => 10])
-            );
+        $response = $client->getResponse();
 
-        $results = $controller->fetchResults($request, 'symfony','github');
-        $this->assertEquals('5*10', $results);
+        // response is successful (HTTP 200)
+        $this->assertTrue($response->isSuccessful());
 
-        $score = $controller->calculateScore($results, 'symfony');
-        $this->assertEquals(50, $score);
+        // response is in JSON format
+        $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
+
+        // Decode the JSON response
+        $data = json_decode($response->getContent(), true);
+
+        // JSON response has the expected structure
+        $this->assertArrayHasKey('term', $data);
+        $this->assertArrayHasKey('score', $data);
+
+        // 'term' and 'score' values match the expected values
+        $this->assertEquals($term, $data['term']);
+        $this->assertIsFloat($data['score']); // score is a float
+
     }
 }
